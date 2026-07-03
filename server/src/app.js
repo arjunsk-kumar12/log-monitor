@@ -1,13 +1,11 @@
 const express = require("express");
-
+const routes = require("./routes/log-routes");
 const app = express();
 
 //Middlewares
 app.use(express.json());
 
 //Routes
-app.get("/", (req,res)=>{
-    res.send("TEST: Log Monitor Server is running")
-})
+app.use("/api/v1",routes)
 
 module.exports = app;

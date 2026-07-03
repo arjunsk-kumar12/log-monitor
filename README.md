@@ -14,4 +14,4 @@ A fullstack application to track and monitor various services
 - Frontend: React
 
 ## Current Status
-- in development
+#### IN DEVELOPMENT
