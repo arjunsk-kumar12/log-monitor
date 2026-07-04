@@ -9,7 +9,7 @@ const addLog = async(req,res) =>{
         if(!service || !level || !message){
             return res.status(400).json({
                 success: false,
-                message: "invalid log"
+                message: "Invalid log."
             })
         }
 
@@ -18,18 +18,38 @@ const addLog = async(req,res) =>{
 
         return res.status(201).json({
             success: true,
-            message: "log added successfully",
+            message: "Log added successfully.",
             log
         })
     }catch(e){
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Internal Server Error."
         })
     }
 }
 
-// TODO: GET/logs
+// GET/logs
 // return all logs added to database
-
-module.exports = {addLog};
+const getLogs = async(req,res) =>{
+  try{
+    const logs = await Log.find();
+    if(!logs){
+        return res.status(400).json({
+            sucess: false,
+            message: "No logs present"
+        })
+    }
+    return res.status(200).json({
+        success: true,
+        message: "All logs retrieved.",
+        logs
+    })
+  }catch(e){
+    return res.status(500).json({
+        success: false,
+        message: "Internal Server Error."
+    })
+  }
+}
+module.exports = {addLog, getLogs};

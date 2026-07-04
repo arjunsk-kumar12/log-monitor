@@ -1,8 +1,12 @@
 const express = require('express')
-const {addLog} = require("../controllers/log-controller")
+const {addLog, getLogs} = require("../controllers/log-controller")
 const router = express.Router();
 
-//POST/logs add route
-router.post("/logs", addLog);
+//Routes
+// POST/logs - add log to database
+router.post("/", addLog);
+
+// GET/logs - retrieve all logs in database
+router.get("/",getLogs)
 
 module.exports = router;

@@ -6,6 +6,6 @@ const app = express();
 app.use(express.json());
 
 //Routes
-app.use("/api/v1",routes)
+app.use("/api/v1/logs",routes)
 
 module.exports = app;
