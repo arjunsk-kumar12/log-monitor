@@ -37,12 +37,26 @@ const addLog = async(req,res) =>{
 //TODO: Pagination, filtering, sorting etc
 const getLogs = async(req,res) =>{
     try{
+        //get the service and level from query params of request
+        const {service, level} = req.query;
+        const filterObj = {};
+    
+        //check which parameters are given
+        if(service){
+            filterObj.service = service;
+        }
+        if(level){
+            filterObj.level = level;
+        }
+        
         //check if logs are present
-        const logs = await Log.find();
-        if(!logs){
-            return res.status(400).json({
-                sucess: false,
-                message: "No logs present"
+        const logs = await Log.find(filterObj);
+        //no logs found with given query params
+        if(logs.length === 0){ 
+            return res.status(200).json({
+                sucess: true,
+                messsage: "No logs present with given parameters.",
+                logs
             })
         }
         //successfully retrieved
