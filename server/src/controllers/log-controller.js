@@ -1,20 +1,25 @@
 const Log = require("../models/Log");
+const {validateLog, validateQuery} = require("../validation/validation")
 const mongoose = require("mongoose")
 
 // POST/logs
 // add recieved logs to database and validate the logs
 const addLog = async(req,res) =>{
     try{
-        //cjecl of each of the field are present
-        const {service, level, message} = req.body;
-        if(!service || !level || !message){
+
+        //validate the request and check if each field is valid
+        const {error} = validateLog(req.body)
+        if(error){
             return res.status(400).json({
                 success: false,
-                message: "Invalid log."
+                message: error.details[0].message
             })
         }
+        
+        //extract field from request body
+        const {service, level, message} = req.body;
 
-        //save to database
+        //create log and save to db
         let log = new Log({service,level,message});
         await log.save();
 
@@ -37,6 +42,13 @@ const addLog = async(req,res) =>{
 //TODO: Pagination, filtering, sorting etc
 const getLogs = async(req,res) =>{
     try{
+        const {error} = validateQuery(req.query);
+        if(error){
+            return res.status(400).json({
+                success : false,
+                message: error.details[0].message
+            })
+        }
         //get the service and level from query params of request
         const {service, level} = req.query;
         const filterObj = {};
