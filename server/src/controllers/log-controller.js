@@ -42,15 +42,15 @@ const addLog = async(req,res) =>{
 //TODO: Pagination, filtering, sorting etc
 const getLogs = async(req,res) =>{
     try{
-        const {error} = validateQuery(req.query);
+        const {error, value} = validateQuery(req.query);
         if(error){
             return res.status(400).json({
                 success : false,
                 message: error.details[0].message
             })
         }
-        //get the service and level from query params of request
-        const {service, level} = req.query;
+        //get the service and level from query params of request(after validation)
+        const {service, level, page, limit,sort} = value;
         const filterObj = {};
     
         //check which parameters are given
@@ -62,7 +62,10 @@ const getLogs = async(req,res) =>{
         }
         
         //check if logs are present
-        const logs = await Log.find(filterObj);
+        //apply sort parameters
+        //apply pagination parameters
+        const logs = await Log.find(filterObj).sort(sort).skip((page - 1) * limit).limit(limit);
+
         //no logs found with given query params
         if(logs.length === 0){ 
             return res.status(200).json({
