@@ -1,8 +1,9 @@
+import Dashboard from "./pages/Dashboard";
 
 function App(){
   return (
     <div>
-      <h2> Log Monitor Dashboard</h2>
+      <Dashboard />
     </div>
   )
 }
