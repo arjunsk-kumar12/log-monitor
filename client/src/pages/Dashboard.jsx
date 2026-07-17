@@ -1,5 +1,5 @@
 import FilterBar from "../components/FilterBar";
-
+import LogGrid from "../components/LogGrid";
 function Dashboard(){
     return (
         <div>
@@ -7,6 +7,7 @@ function Dashboard(){
             <FilterBar />
 
             {/* TODO: add table/list and pagination*/}
+            <LogGrid />
         </div>
     )
 }
