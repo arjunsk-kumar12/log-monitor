@@ -1,7 +1,8 @@
 
-//displays the log in a grid format
-function LogGrid(){
-
+//displays the log in a table format
+//TODO: Need to improve ui and format
+function LogGrid(props){
+    const logs = props.logs;
     return (
         <div className="log-grid">
             <table>
@@ -13,13 +14,16 @@ function LogGrid(){
                         <th>Message</th>
                     </tr>
                 </thead>
+
                 <tbody>
-                    <tr>
-                        <td>10:42</td>
-                        <td>auth-service</td>
-                        <td>INFO</td>
-                        <td>User successfully logged in</td>
-                    </tr>
+                    {logs.map((log) =>(
+                        <tr>
+                            <td>{log.createdAt}</td>
+                            <td>{log.service}</td>
+                            <td>{log.level}</td>
+                            <td>{log.message}</td>
+                        </tr>   
+                    ))}
                 </tbody>
             </table>
 
